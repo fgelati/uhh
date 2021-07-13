@@ -1,0 +1,48 @@
+The microdata-code produced for the Hamburger Matrikelportal using schema.org is made accessible here
+
+<p itemscope>
+<div itemtype="http://schema.org/Dataset">
+<div itemprop="name">Hamburger Matrikelportal</div>
+<div itemprop="description">Das Hamburger Matrikelportal ermöglicht Recherchen in den Matrikelbüchern der Universität Hamburg. Es bietet Informationen zu allen Studierenden, die zwischen 1919 und 1935 in Hamburg studiert haben.</div>
+</div>
+
+<div itemprop="publisher" itemtype="http://schema.org/Organization">
+<div itemprop="name">Universitätsarchiv Hamburg</div>
+<div itemprop="url">https://www.archiv.uni-hamburg.de/</div>
+</div>
+
+<div itemprop="mainEntity" itemtype="http://schema.org/Thing">
+<div itemprop="name">Immatrikulation</div>
+<div itemprop="url">https://www.wikidata.org/wiki/Q1193162</div>
+</div>
+
+<div itemprop="copyrightHolder" itemtype="http://schema.org/Organization">
+<div itemprop="name">Universitätsarchiv Hamburg</div>
+<div itemprop="url">https://www.archiv.uni-hamburg.de/</div>
+</div>
+
+<div itemprop="funder" itemtype="http://schema.org/Organization">
+<div itemprop="name">DFG - Deutsche Forschungsgemeinschaft</div>
+<div itemprop="url">https://www.dfg.de/</div>
+</div>
+
+<div itemprop="license" itemtype="http://schema.org/Thing">
+<div itemprop="url">https://creativecommons.org/licenses/by/4.0/</div>
+</div>
+
+<div itemprop="creator" itemtype="http://schema.org/Organization">
+<div itemprop="name">Universitätsarchiv Hamburg</div>
+<div itemprop="url">https://www.archiv.uni-hamburg.de/</div>
+</div>
+
+<div itemprop="sourceOrganization" itemtype="http://schema.org/Organization">
+<div itemprop="name">Universität Hamburg</div>
+<div itemprop="url">https://www.uni-hamburg.de/</div>
+</div>
+
+<div itemprop="mantainer" itemtype="http://schema.org/Organization">
+<div itemprop="name">Hamburger Informatik Technologie-Center e. V. (HITeC)</div>
+<div itemprop="url">https://www.hitec-hamburg.de/</div>
+</div>
+
+</p>
