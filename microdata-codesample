@@ -1,9 +1,11 @@
-The microdata-code produced for the Hamburger Matrikelportal using schema.org is made accessible here
+The microdata-code produced for the Hamburger Professorinnen- und Professorenkatalog using schema.org is made accessible here
 
 <p itemscope>
 <div itemtype="http://schema.org/Dataset">
-<div itemprop="name">Hamburger Matrikelportal</div>
-<div itemprop="description">Das Hamburger Matrikelportal ermöglicht Recherchen in den Matrikelbüchern der Universität Hamburg. Es bietet Informationen zu allen Studierenden, die zwischen 1919 und 1935 in Hamburg studiert haben.</div>
+<div itemprop="name">Hamburger Professorinnen- und Professorenkatalog</div>
+<div itemprop="description">Der Hamburger Professorinnen- und Professorenkatalog stellt Professorinnen und Professoren sowie Privatdozentinnen und Privatdozenten der Universität Hamburg von 1919 bis in die Gegenwart dar.</div>
+<div itemprop="citation">Universitätsarchiv Hamburg, Hamburger Professorinnen- und Professorenkatalog.</div>
+<div itemprop="url">https://www.hpk.uni-hamburg.de</div>
 </div>
 
 <div itemprop="publisher" itemtype="http://schema.org/Organization">
@@ -12,8 +14,13 @@ The microdata-code produced for the Hamburger Matrikelportal using schema.org is
 </div>
 
 <div itemprop="mainEntity" itemtype="http://schema.org/Thing">
-<div itemprop="name">Immatrikulation</div>
-<div itemprop="url">https://www.wikidata.org/wiki/Q1193162</div>
+<div itemprop="name">Professur</div>
+<div itemprop="url">https://www.wikidata.org/wiki/Q81752537</div>
+</div>
+
+<div itemprop="mainEntityOfPage" itemtype="http://schema.org/Person">
+<div itemprop="name">Hochschullehrer</div>
+<div itemprop="url">https://www.wikidata.org/wiki/Q1622272</div>
 </div>
 
 <div itemprop="copyrightHolder" itemtype="http://schema.org/Organization">
@@ -22,8 +29,8 @@ The microdata-code produced for the Hamburger Matrikelportal using schema.org is
 </div>
 
 <div itemprop="funder" itemtype="http://schema.org/Organization">
-<div itemprop="name">DFG - Deutsche Forschungsgemeinschaft</div>
-<div itemprop="url">https://www.dfg.de/</div>
+<div itemprop="name">Universität Hamburg</div>
+<div itemprop="url">https://www.uni-hamburg.de/</div>
 </div>
 
 <div itemprop="license" itemtype="http://schema.org/Thing">
