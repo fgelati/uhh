@@ -1,0 +1,438 @@
+<xsl:stylesheet version = "1.0" xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">
+<xsl:key name="servdate" match="service//servdate" use="@type"/>
+<xsl:key name="servflag" match="service//servflag" use="@type"/>
+<xsl:key name="metagnd" match="metadata//identifier" use="@type"/>
+<xsl:key name="metaperiod" match="metadata//period" use="@class"/>
+<xsl:template match="/"> 
+<xsl:for-each select="mycoreobject">
+<eac-cpf>
+<control>
+	<recordId><xsl:value-of select="@ID"/></recordId>
+	<xsl:for-each select="key('metagnd','gnd')"><otherRecordId localType="GND-number"><xsl:value-of select="[text()]"/></otherRecordId></xsl:for-each>
+	<maintenanceStatus>new</maintenanceStatus>
+	<maintenanceAgency>
+		<agencyName xml:id="https://ror.org/00g30e956" xml:lang="de">Universitätsarchiv Hamburg</agencyName>
+		<agencyName xml:id="https://ror.org/00g30e956" xml:lang="en">Hamburg University Archives</agencyName>
+		<agencyCode>DE-2457</agencyCode>
+		<descriptiveNote>
+			<p>Mittelweg 177, D-20148 Hamburg</p>
+			<p>telephone: 0049 40 4 28 38 5659</p>
+			<p>archiv@uni-hamburg.de</p>
+			<p href="https://www.archiv.uni-hamburg.de" type="simple">https://www.archiv.uni-hamburg.de</p>
+		</descriptiveNote>
+	</maintenanceAgency>
+	<languageDeclaration>
+      <language languageCode="de">German</language>
+      <script scriptCode="Latn">Latin</script>
+	</languageDeclaration>
+	<conventionDeclaration></conventionDeclaration>
+	<maintenanceHistory>
+		<maintenanceEvent>
+			<eventType>created</eventType>
+			<eventDateTime><xsl:for-each select="key('servdate','createdate')"><xsl:value-of select="[text()]"/></xsl:for-each></eventDateTime>
+			<agent><xsl:for-each select="key('servflag','createdby')"><xsl:value-of select="[text()]"/></xsl:for-each></agent>
+		</maintenanceEvent>
+		<maintenanceEvent>
+				<eventType>revised</eventType>
+				<eventDateTime><xsl:for-each select="key('servdate','modifydate')"><xsl:value-of select="[text()]"/></xsl:for-each></eventDateTime>
+			<agent><xsl:for-each select="key('servflag','modifiedby')"><xsl:value-of select="[text()]"/></xsl:for-each></agent>
+		</maintenanceEvent>
+	</maintenanceHistory>
+	<sources>
+				
+		<xsl:for-each select="metadata/box.mainpublication/mainpublication">
+		<source><sourceEntry>
+		<xsl:value-of select="[text()]"/>
+		</sourceEntry></source>
+		</xsl:for-each>
+		
+		<xsl:for-each select="metadata/box.publicationslink/publicationslink">
+		<source><sourceEntry>
+		<xsl:value-of select="[text()]"/>
+		</sourceEntry></source>
+		</xsl:for-each>
+		
+		<xsl:for-each select="metadata/box.complexref/complexref">
+		<source><sourceEntry>
+		<xsl:value-of select="[text()]"/>
+		</sourceEntry></source>
+		</xsl:for-each>
+		
+		### xlink
+		<xsl:for-each select="metadata/box.source/source/@xlink:title">
+		<source><sourceEntry>
+		<xsl:value-of select="[text()]"/>
+		</sourceEntry></source>
+		</xsl:for-each>
+		
+		<xsl:for-each select="metadata/box.reference/reference">
+		<source><sourceEntry>
+		### xlink
+		<xsl:value-of select="@xlink:title"/>
+		</sourceEntry></source>
+		</xsl:for-each>
+		
+	</sources>
+	<rightsDeclaration>
+		<abbr>CC BY 4.0</abbr>
+		<citation href="https://creativecommons.org/licenses/by/4.0/"/>
+		<descriptiveNote languageCode="de" href="https://www.hpk.uni-hamburg.de">Dieser Eintrag wurde vom Universitätsarchiv Hamburg unter der Lizenz Creative Commons BY 4.0 veröffentlicht. Empfohlene Zitierweise: Universitätsarchiv Hamburg, Hamburger Professorinnen- und Professorenkatalog. URL: https://www.hpk.uni-hamburg.de</descriptiveNote>
+		<descriptiveNote languageCode="en" href="https://www.hpk.uni-hamburg.de">This entry was published by the Hamburg University Archives under the license Creative Commons BY 4.0. Recommended citation: Hamburg University Archives, Hamburg Professor Catalogue. URL: https://www.hpk.uni-hamburg.de</descriptiveNote>
+	</rightsDeclaration>
+</control>
+<cpfDescription>
+	<identity>
+      <entityId localType="HPK-number"><xsl:value-of select="@ID"/></entityId>
+	  <entityId localType="GND-number"><xsl:for-each select="key('metagnd','gnd')"><xsl:value-of select="[text()]"/></xsl:for-each></entityId>
+      <entityType>person</entityType>
+      <nameEntry>
+        <xsl:for-each select="metadata//academictitle"><part localType="academicTitle"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<xsl:for-each select="metadata//firstname"><part localType="givenName"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<xsl:for-each select="metadata//nameaffix"><part localType="nameAffix"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<xsl:for-each select="metadata//surname"><part localType="familyName"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<xsl:for-each select="metadata//variantname"><part localType="alternativeName"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<authorizedForm>
+			<xsl:for-each select="metadata//surname"><xsl:value-of select="[text()]"/></xsl:for-each>,
+			<xsl:value-of select="metadata//firstname"/>
+			<xsl:for-each select="metadata//nameaffix"><xsl:value-of select="[text()]"/></xsl:for-each>
+		</authorizedForm>
+		<xsl:for-each select="metadata//sex"><part localType="gender"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		</nameEntry>
+    </identity>
+	<description>
+		<generalContext>
+			<list>
+				<xsl:for-each select="metadata//confession"><item localType="confession"><xsl:value-of select="[text()]"/></item></xsl:for-each>
+				<xsl:for-each select="metadata//email"><item localType="email"><xsl:value-of select="[text()]"/></item></xsl:for-each>
+				<xsl:for-each select="metadata//homepage"><item localType="homepage"><xsl:value-of select="[text()]"/></item></xsl:for-each>
+			</list>
+		</generalContext>
+		<existDates>
+			<dateSet>
+				<date localType="birthDate" xml:lang="de"><xsl:value-of select="metadata/box.birth/birth/text"/></date>
+				<date localType="deathDate" xml:lang="de"><xsl:value-of select="metadata/box.death/death/text"/></date>
+				<dateRange>
+					<fromDate><xsl:value-of select="metadata/box.birth/birth/von"/></fromDate>
+					<toDate><xsl:value-of select="metadata/box.death/death/von"/></toDate>
+				</dateRange>
+			</dateSet>
+		</existDates>
+		<places>
+			<place localType="birthPlace"><xsl:value-of select="metadata/box.birth/birth/event"/></place>
+			<place localType="deathPlace"><xsl:value-of select="metadata/box.death/death/event"/></place>
+		</places>
+		
+		<biogHist>
+			<chronList>
+			
+			<xsl:for-each select="metadata/box.biographic/biographic">
+				<chronItem>
+					<xsl:for-each select="text"><event><xsl:value-of select="[text()]"/></event></xsl:for-each>
+					<xsl:for-each select="places/place"><placeEntry><xsl:value-of select="[text()]"/></placeEntry></xsl:for-each>
+					<xsl:for-each select="time"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+					<dateRange>
+						<fromDate><xsl:value-of select="von"/></fromDate>
+						<toDate><xsl:value-of select="bis"/></toDate>
+					</dateRange>
+				</chronItem>
+			</xsl:for-each>
+			
+			<xsl:for-each select="metadata/box.academicdegree/academicdegree">
+				<chronItem localType="doctorate">
+					<event><xsl:for-each select="text"><xsl:value-of select="[text()]"/></xsl:for-each>. <xsl:for-each select="dissertation"><xsl:value-of select="[text()]"/></xsl:for-each></event>
+					<xsl:for-each select="places/place"><placeEntry><xsl:value-of select="[text()]"/></placeEntry></xsl:for-each>
+					<xsl:for-each select="time"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+					<dateRange>
+						<fromDate><xsl:value-of select="von"/></fromDate>
+						<toDate><xsl:value-of select="bis"/></toDate>
+					</dateRange>
+				</chronItem>
+			</xsl:for-each>
+			
+			<xsl:for-each select="metadata/box.award/award">
+				<chronItem>
+					<event><xsl:for-each select="text"><xsl:value-of select="[text()]"/></xsl:for-each></event>
+					<xsl:for-each select="places/place"><placeEntry><xsl:value-of select="[text()]"/></placeEntry></xsl:for-each>
+					<xsl:for-each select="time"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+				</chronItem>
+			</xsl:for-each>
+			
+			<xsl:for-each select="metadata/box.otherinfo">
+				<chronItem>
+					<event><xsl:for-each select="otherinfo"><xsl:value-of select="[text()]"/></xsl:for-each></event>
+				</chronItem>
+			</xsl:for-each>
+			
+			</chronList>
+		</biogHist>
+		
+		<functions>
+		
+			<xsl:for-each select="metadata/box.otherfunction/otherfunction">
+				<function>
+					<term><xsl:for-each select="text"><xsl:value-of select="[text()]"/></xsl:for-each></term>
+					<xsl:for-each select="places/place"><placeEntry><xsl:value-of select="[text()]"/></placeEntry></xsl:for-each>
+					<xsl:for-each select="time"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+				</function>
+			</xsl:for-each>
+		
+			<xsl:for-each select="metadata/box.partymember/partymember">
+				<function localType="partyMembership">
+					<term><xsl:for-each select="text"><xsl:value-of select="[text()]"/></xsl:for-each></term>
+					<xsl:for-each select="places/place"><placeEntry><xsl:value-of select="[text()]"/></placeEntry></xsl:for-each>
+					<xsl:for-each select="time"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+				</function>
+			</xsl:for-each>
+			
+			<xsl:for-each select="metadata/box.membership/membership">
+				<function localType="membership">
+					<term><xsl:for-each select="text"><xsl:value-of select="[text()]"/></xsl:for-each></term>
+					<xsl:for-each select="places/place"><placeEntry><xsl:value-of select="[text()]"/></placeEntry></xsl:for-each>
+					<xsl:for-each select="time"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+				</function>
+			</xsl:for-each>
+		
+		</functions>
+		
+		<occupations>
+		
+			<xsl:for-each select="metadata/box.adminfunction/adminfunction">
+			<occupation localType="administrativeFunction">
+					<term><xsl:for-each select="text"><xsl:value-of select="[text()]"/></xsl:for-each></term>
+					<xsl:for-each select="time"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+			</occupation>
+			</xsl:for-each>
+		
+			<xsl:for-each select="metadata/box.faculty/faculty/classification">
+			<occupation localType="facultyCode"><term><xsl:value-of select="@categid"/></term></occupation>
+			</xsl:for-each>
+			<xsl:for-each select="metadata/box.professorship/professorship/classification">
+			<occupation localType="positionCode"><term><xsl:value-of select="@categid"/></term></occupation>
+			</xsl:for-each>
+			<xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.01.010']">
+        <occupation localType="faculty"><term>Rechts- und Staatswissenschaftliche Fakultät (1919-1954)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.01.020']">
+        <occupation localType="faculty"><term>Rechtswissenschaftliche Fakultät (1954-1970)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.01.030']">
+        <occupation localType="faculty"><term>Fachbereich Rechtswissenschaft (1970-1974)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.01.035']">
+        <occupation localType="faculty"><term>Fachbereich Rechtswissenschaft I (1974-1998)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.01.040']">
+        <occupation localType="faculty"><term>Fachbereich Rechtswissenschaft II (1974-1998)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.01.045']">
+        <occupation localType="faculty"><term>Fachbereich Rechtswissenschaft (1998-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.01.050']">
+        <occupation localType="faculty"><term>Fakultät für Rechtswissenschaft (2005-)</term></occupation></xsl:for-each>
+
+	<xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.02.010']">
+        <occupation localType="faculty"><term>Medizinische Fakultät (1919-1970)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.02.020']">
+        <occupation localType="faculty"><term>Fachbereich Medizin (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.02.030']">
+        <occupation localType="faculty"><term>Medizinische Fakultät (2005-)</term></occupation></xsl:for-each>
+
+	<xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.010']">
+        <occupation localType="faculty"><term>Philosophische Fakultät (1919-1970)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.020']">
+        <occupation localType="faculty"><term>Evangelisch-Theologische Fakultät (1952-1970)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.025']">
+        <occupation localType="faculty"><term>Fachbereich Evangelische Theologie (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.030']">
+        <occupation localType="faculty"><term>Fachbereich Philosophie, Psychologie und Sozialwissenschaften (1970-1974)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.035']">
+        <occupation localType="faculty"><term>Fachbereich Philosophie und Sozialwissenschaften (1974-2000)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.040']">
+        <occupation localType="faculty"><term>Fachbereich Sprachwissenschaften (1970-2002)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.045']">
+        <occupation localType="faculty"><term>Fachbereich Sprach-, Literatur- und Medienwissenschaft (2002-2005)</term></occupation></xsl:for-each>
+      
+	  <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.050']">
+        <occupation localType="faculty"><term>Fachbereich Geschichtswissenschaft (1970-2000)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.055']">
+        <occupation localType="faculty"><term>Fachbereich Philosophie und Geschichtswissenschaft (2000-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.060']">
+        <occupation localType="faculty"><term>Fachbereich Kulturgeschichte und Kulturkunde (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.070']">
+        <occupation localType="faculty"><term>Fachbereich Orientalistik (1970-2000)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.075']">
+        <occupation localType="faculty"><term>Fachbereich Orientalistik/Asien-Afrika-Institut (2000-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.080']">
+        <occupation localType="faculty"><term>Fakultät für Geistes- und Kulturwissenschaften (2005-2006)</term></occupation></xsl:for-each>
+      
+	  <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.03.085']">
+        <occupation localType="faculty"><term>Fakultät für Geisteswissenschaften (2006-)</term></occupation></xsl:for-each>
+ 
+	<xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.04.010']">
+        <occupation localType="faculty"><term>Mathematisch-Naturwissenschaftliche Fakultät (1919-1970)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.04.020']">
+        <occupation localType="faculty"><term>Fachbereich Mathematik (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.04.030']">
+        <occupation localType="faculty"><term>Fachbereich Physik (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.04.040']">
+        <occupation localType="faculty"><term>Fachbereich Chemie (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.04.050']">
+        <occupation localType="faculty"><term>Fachbereich Biologie (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.04.060']">
+        <occupation localType="faculty"><term>Fachbereich Geowissenschaften (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.04.070']">
+        <occupation localType="faculty"><term>Fachbereich Informatik (1977-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.04.080']">
+        <occupation localType="faculty"><term>Fakultät für Mathematik, Informatik und Naturwissenschaften (2005-)</term></occupation></xsl:for-each>
+
+	<xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.05.010']">
+        <occupation localType="faculty"><term>Wirtschafts- und Sozialwissenschaftliche Fakultät (1954-1970)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.05.020']">
+        <occupation localType="faculty"><term>Fachbereich Wirtschaftswissenschaften (1970-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.05.030']">
+        <occupation localType="faculty"><term>Fachbereich Sozialwissenschaften (2000-2005)</term></occupation></xsl:for-each>
+      
+	  <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.05.040']">
+        <occupation localType="faculty"><term>Fakultät Wirtschafts- und Sozialwissenschaften (2005-)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.05.050']">
+        <occupation localType="faculty"><term>Fakultät für Betriebswirtschaft (2014-)</term></occupation></xsl:for-each>
+
+	<xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.06.010']">
+        <occupation localType="faculty"><term>Fachbereich Erziehungswissenschaft (1969-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.06.020']">
+        <occupation localType="faculty"><term>Fachbereich Psychologie (1974-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.06.030']">
+        <occupation localType="faculty"><term>Fachbereich Sportwissenschaft (1980-2005)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.06.040']">
+        <occupation localType="faculty"><term>Fakultät für Erziehungswissenschaft, Psychologie und Bewegungswissenschaft (2005-2014)</term></occupation></xsl:for-each>
+      
+	  <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.06.050']">
+        <occupation localType="faculty"><term>Fakultät für Erziehungswissenschaft (2014-)</term></occupation></xsl:for-each>
+      
+      <xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.06.060']">
+        <occupation localType="faculty"><term>Fakultät für Psychologie und Bewegungswissenschaft (2014-)</term></occupation></xsl:for-each>
+  
+	<xsl:for-each select="metadata/box.faculty/faculty/classification[@categid='CPH.10']">
+      <occupation localType="faculty"><term>Sonstige</term></occupation></xsl:for-each>
+			
+			<xsl:for-each select="metadata/box.period/period">
+				<occupation localType="periodOfActivity">
+					<xsl:for-each select="text"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+					<dateRange>
+						<fromDate><xsl:value-of select="von"/></fromDate>
+						<toDate><xsl:value-of select="bis"/></toDate>
+					</dateRange>
+				</occupation>
+			</xsl:for-each>
+			<xsl:for-each select="metadata/box.institute/institute">
+				<occupation localType="institute">
+					<xsl:for-each select="text"><term><xsl:value-of select="[text()]"/></term></xsl:for-each>
+					<xsl:for-each select="time"><date><xsl:value-of select="[text()]"/></date></xsl:for-each>
+				</occupation>
+			</xsl:for-each>
+			<xsl:for-each select="metadata/box.professorship/professorship">
+			<occupation localType="professorship">
+				<term><xsl:value-of select="event"/></term>
+				
+				<xsl:for-each select="classification[@categid='CPH.PROF.01.01']">
+				<descriptiveNote>(planmäßige) ordentliche Professur (1919-1978)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.01.02']">
+				<descriptiveNote>Universitätsprofessur (1964-)</descriptiveNote></xsl:for-each>
+			
+		<xsl:for-each select="classification[@categid='CPH.PROF.02.01']">
+				<descriptiveNote>(planmäßige) außerordentliche Professur (1919-1969)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.02.02']">
+				<descriptiveNote>außerplanmäßige außerordentliche Professur (1924)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.02.03']">
+				<descriptiveNote>nichtbeamtete außerordentliche Professur (1931-1939)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.02.04']">
+				<descriptiveNote>außerplanmäßige Professur (1939-1969)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.02.05']">
+				<descriptiveNote>Professor/-in (1969-)</descriptiveNote></xsl:for-each>
+		
+		<xsl:for-each select="classification[@categid='CPH.PROF.03.01']">
+				<descriptiveNote>(ordentliche) Honorarprofessur (1919-1969)</descriptiveNote></xsl:for-each>
+			
+		<xsl:for-each select="classification[@categid='CPH.PROF.04.01']">
+				<descriptiveNote>Privatdozentur (1919-1939)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.04.02']">
+				<descriptiveNote>Privatdozentur, Titularprofessur (auf sonstiger Grundlage)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.04.03']">
+				<descriptiveNote>Professorentitel nach § 12 HSG (1921-1931)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.04.04']">
+				<descriptiveNote>Dozentur (1939-1951)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.04.05']">
+				<descriptiveNote>Privatdozentur (1951-)</descriptiveNote></xsl:for-each>
+			
+		<xsl:for-each select="classification[@categid='CPH.PROF.05.01']">
+				<descriptiveNote>Juniorprofessur (2002-)</descriptiveNote></xsl:for-each>
+			
+			<xsl:for-each select="classification[@categid='CPH.PROF.05.02']">
+				<descriptiveNote>Sonstige</descriptiveNote></xsl:for-each>
+			
+		<xsl:for-each select="classification[@categid='CPH.PROF.09']">
+			<descriptiveNote>Verwaltung</descriptiveNote></xsl:for-each>
+		
+		<xsl:for-each select="classification[@categid='CPH.PROF.10']">
+			<descriptiveNote>Unklar</descriptiveNote></xsl:for-each>
+				
+				<dateRange>
+					<fromDate><xsl:value-of select="von"/></fromDate>
+					<toDate><xsl:value-of select="bis"/></toDate>
+				</dateRange>
+				
+				
+			</occupation>
+			</xsl:for-each>
+			
+			
+		</occupations>
+	</description>
+	<relations>
+		<xsl:for-each select="box.family/family">
+		<cpfRelation cpfRelationType="family">
+			<relationEntry><xsl:value-of select="name"/></relationEntry>
+			<descriptiveNote localType="profession"><xsl:value-of select="profession"/></descriptiveNote>
+		</cpfRelation>
+		</xsl:for-each>
+	</relations>
+</cpfDescription>
+</eac-cpf>
+</xsl:for-each>
+</xsl:template>
+</xsl:stylesheet>
