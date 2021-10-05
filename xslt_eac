@@ -1,0 +1,361 @@
+<xsl:stylesheet version = "1.0" xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">
+<xsl:key name="servdate" match="service//servdate" use="@type"/>
+<xsl:key name="servflag" match="service//servflag" use="@type"/>
+<xsl:key name="metagnd" match="metadata//PID" use="@label"/>
+<xsl:key name="metaperiod" match="metadata//period" use="@class"/>
+<xsl:template match="/"> 
+<xsl:for-each select="mycoreobject">
+<eac-cpf>
+<control>
+	<recordId><xsl:value-of select="@ID"/></recordId>
+	<xsl:for-each select="key('metagnd','GND')"><otherRecordId localType="GND-number"><xsl:value-of select="[text()]"/></otherRecordId></xsl:for-each>
+	<xsl:for-each select="key('metagnd','ORCID')"><otherRecordId localType="ORCID-number"><xsl:value-of select="[text()]"/></otherRecordId></xsl:for-each>
+	<xsl:for-each select="metadata//laufende_nummer"><otherRecordId localType="sequence-number"><xsl:value-of select="[text()]"/></otherRecordId></xsl:for-each>
+	<xsl:for-each select="metadata//nr_abgangsliste"><otherRecordId localType="leavingList-number"><xsl:value-of select="[text()]"/></otherRecordId></xsl:for-each>
+	<maintenanceStatus>new</maintenanceStatus>
+	<maintenanceAgency>
+		<agencyName xml:id="https://ror.org/00g30e956" xml:lang="de">Universitätsarchiv Hamburg</agencyName>
+		<agencyName xml:id="https://ror.org/00g30e956" xml:lang="en">Hamburg University Archives</agencyName>
+		<agencyCode>DE-2457</agencyCode>
+		<descriptiveNote>
+			<p>Mittelweg 177, D-20148 Hamburg</p>
+			<p>telephone: 0049 40 4 28 38 5659</p>
+			<p>archiv@uni-hamburg.de</p>
+			<p href="https://www.archiv.uni-hamburg.de" type="simple">https://www.archiv.uni-hamburg.de</p>
+		</descriptiveNote>
+	</maintenanceAgency>
+	<languageDeclaration>
+      <language languageCode="de">German</language>
+      <script scriptCode="Latn">Latin</script>
+	</languageDeclaration>
+	<conventionDeclaration></conventionDeclaration>
+	<maintenanceHistory>
+		<maintenanceEvent>
+			<eventType>created</eventType>
+			<eventDateTime><xsl:for-each select="key('servdate','createdate')"><xsl:value-of select="[text()]"/></xsl:for-each></eventDateTime>
+			<agent><xsl:for-each select="key('servflag','createdby')"><xsl:value-of select="[text()]"/></xsl:for-each></agent>
+		</maintenanceEvent>
+		<maintenanceEvent>
+				<eventType>revised</eventType>
+				<eventDateTime><xsl:for-each select="key('servdate','modifydate')"><xsl:value-of select="[text()]"/></xsl:for-each></eventDateTime>
+			<agent><xsl:for-each select="key('servflag','modifiedby')"><xsl:value-of select="[text()]"/></xsl:for-each></agent>
+		</maintenanceEvent>
+	</maintenanceHistory>
+	<sources>
+		
+	</sources>
+	<rightsDeclaration>
+		<abbr>CC BY 4.0</abbr>
+		<citation href="https://creativecommons.org/licenses/by/4.0/"/>
+		<descriptiveNote languageCode="de" href="https://www.hpk.uni-hamburg.de">Dieser Eintrag wurde vom Universitätsarchiv Hamburg unter der Lizenz Creative Commons BY 4.0 veröffentlicht. Empfohlene Zitierweise: Universitätsarchiv Hamburg, Hamburger Professorinnen- und Professorenkatalog. URL: https://www.hpk.uni-hamburg.de</descriptiveNote>
+		<descriptiveNote languageCode="en" href="https://www.hpk.uni-hamburg.de">This entry was published by the Hamburg University Archives under the license Creative Commons BY 4.0. Recommended citation: Hamburg University Archives, Hamburg Professor Catalogue. URL: https://www.hpk.uni-hamburg.de</descriptiveNote>
+	</rightsDeclaration>
+</control>
+<cpfDescription>
+	<identity>
+		<entityId localType="HPK-number"><xsl:value-of select="@ID"/></entityId>
+		<xsl:for-each select="key('metagnd','GND')"><otherEntityId localType="GND-number"><xsl:value-of select="[text()]"/></otherEntityId></xsl:for-each>
+		<xsl:for-each select="key('metagnd','ORCID')"><otherEntityId localType="ORCID-number"><xsl:value-of select="[text()]"/></otherEntityId></xsl:for-each>
+	<entityType>person</entityType>
+      <nameEntry>
+        <xsl:for-each select="metadata//vorname"><part localType="givenName"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<xsl:for-each select="metadata//nameaffix"><part localType="nameAffix"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<xsl:for-each select="metadata//familienname"><part localType="familyName"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<xsl:for-each select="metadata//rufname"><part localType="alternativeName"><xsl:value-of select="[text()]"/></part></xsl:for-each>
+		<authorizedForm>
+			<xsl:for-each select="metadata//familienname"><xsl:value-of select="[text()]"/></xsl:for-each>,
+			<xsl:value-of select="metadata//vorname"/>
+			<xsl:for-each select="metadata//nameaffix"><xsl:value-of select="[text()]"/></xsl:for-each>
+		</authorizedForm>
+		<xsl:for-each select="metadata/def.geschlecht/geschlecht">
+		<part localType="gender">
+			<xsl:choose>
+			<xsl:when test="@categid=1">männlich</xsl:when>
+			<xsl:when test="@categid=2">weiblich</xsl:when>
+			<xsl:otherwise>unbekannt</xsl:otherwise>
+			</xsl:choose>
+		</part>
+		</xsl:for-each>
+		</nameEntry>
+    </identity>
+	<description>
+		<generalContext>
+			<list>
+				<xsl:for-each select="metadata//staatsangeh"><item localType="nationality"><xsl:value-of select="[text()]"/></item></xsl:for-each>
+			<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state000']">
+			<item xml:lang="de" localType="normalisedNationality">Argentinien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state001']">
+			<item xml:lang="de" localType="normalisedNationality">Australien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state002']">
+			<item xml:lang="de" localType="normalisedNationality">Belgien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state003']">
+			<item xml:lang="de" localType="normalisedNationality">Bolivien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state004']">
+			<item xml:lang="de" localType="normalisedNationality">Brasilien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state005']">
+			<item xml:lang="de" localType="normalisedNationality">Bulgarien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state006']">
+			<item xml:lang="de" localType="normalisedNationality">Chile"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state007']">
+			<item xml:lang="de" localType="normalisedNationality">China"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state008']">
+			<item xml:lang="de" localType="normalisedNationality">Deutschland"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state009']">
+			<item xml:lang="de" localType="normalisedNationality">Dominica"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state010']">
+			<item xml:lang="de" localType="normalisedNationality">Dominikanische Republik"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state011']">
+			<item xml:lang="de" localType="normalisedNationality">Dänemark"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state012']">
+			<item xml:lang="de" localType="normalisedNationality">Ecuador"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state013']">
+			<item xml:lang="de" localType="normalisedNationality">El Salvador"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state014']">
+			<item xml:lang="de" localType="normalisedNationality">England"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state015']">
+			<item xml:lang="de" localType="normalisedNationality">Estland"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state016']">
+			<item xml:lang="de" localType="normalisedNationality">Finnland"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state017']">
+			<item xml:lang="de" localType="normalisedNationality">Frankreich"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state018']">
+			<item xml:lang="de" localType="normalisedNationality">Freie Stadt Danzig"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state019']">
+			<item xml:lang="de" localType="normalisedNationality">Georgien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state020']">
+			<item xml:lang="de" localType="normalisedNationality">Griechenland"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state021']">
+			<item xml:lang="de" localType="normalisedNationality">Guatemala"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state022']">
+			<item xml:lang="de" localType="normalisedNationality">Honduras"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state023']">
+			<item xml:lang="de" localType="normalisedNationality">Indien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state024']">
+			<item xml:lang="de" localType="normalisedNationality">Irak"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state025']">
+			<item xml:lang="de" localType="normalisedNationality">Iran"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state026']">
+			<item xml:lang="de" localType="normalisedNationality">Irland"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state027']">
+			<item xml:lang="de" localType="normalisedNationality">Island"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state028']">
+			<item xml:lang="de" localType="normalisedNationality">Italien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state029']">
+			<item xml:lang="de" localType="normalisedNationality">Japan"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state030']">
+			<item xml:lang="de" localType="normalisedNationality">Jugoslawien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state031']">
+			<item xml:lang="de" localType="normalisedNationality">Kolumbien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state032']">
+			<item xml:lang="de" localType="normalisedNationality">Korea"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state033']">
+			<item xml:lang="de" localType="normalisedNationality">Kuba"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state034']">
+			<item xml:lang="de" localType="normalisedNationality">Lettland"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state035']">
+			<item xml:lang="de" localType="normalisedNationality">Liberien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state036']">
+			<item xml:lang="de" localType="normalisedNationality">Litauen"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state037']">
+			<item xml:lang="de" localType="normalisedNationality">Luxemburg"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state038']">
+			<item xml:lang="de" localType="normalisedNationality">Memelland"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state039']">
+			<item xml:lang="de" localType="normalisedNationality">Mexiko"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state040']">
+			<item xml:lang="de" localType="normalisedNationality">Nicaragua"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state041']">
+			<item xml:lang="de" localType="normalisedNationality">Niederlande"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state042']">
+			<item xml:lang="de" localType="normalisedNationality">Norwegen"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state043']">
+			<item xml:lang="de" localType="normalisedNationality">Palästina"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state044']">
+			<item xml:lang="de" localType="normalisedNationality">Panama"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state045']">
+			<item xml:lang="de" localType="normalisedNationality">Paraguay"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state046']">
+			<item xml:lang="de" localType="normalisedNationality">Persien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state047']">
+			<item xml:lang="de" localType="normalisedNationality">Peru"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state048']">
+			<item xml:lang="de" localType="normalisedNationality">Peru "</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state049']">
+			<item xml:lang="de" localType="normalisedNationality">Polen"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state050']">
+			<item xml:lang="de" localType="normalisedNationality">Portugal"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state051']">
+			<item xml:lang="de" localType="normalisedNationality">Rumänien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state052']">
+			<item xml:lang="de" localType="normalisedNationality">Russland"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state053']">
+			<item xml:lang="de" localType="normalisedNationality">Schweden"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state054']">
+			<item xml:lang="de" localType="normalisedNationality">Schweiz"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state055']">
+			<item xml:lang="de" localType="normalisedNationality">Schweiz "</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state056']">
+			<item xml:lang="de" localType="normalisedNationality">Siam"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state057']">
+			<item xml:lang="de" localType="normalisedNationality">Sowjetunion"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state058']">
+			<item xml:lang="de" localType="normalisedNationality">Spanien"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state059']">
+			<item xml:lang="de" localType="normalisedNationality">Staatenlos"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state060']">
+			<item xml:lang="de" localType="normalisedNationality">Südafrika"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state061']">
+			<item xml:lang="de" localType="normalisedNationality">Tschechoslowakei"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state062']">
+			<item xml:lang="de" localType="normalisedNationality">Türkei"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state063']">
+			<item xml:lang="de" localType="normalisedNationality">USA"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state064']">
+			<item xml:lang="de" localType="normalisedNationality">Unbekannt"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state065']">
+			<item xml:lang="de" localType="normalisedNationality">Ungarn"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state066']">
+			<item xml:lang="de" localType="normalisedNationality">Uruguay"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state067']">
+			<item xml:lang="de" localType="normalisedNationality">Venezuela"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state068']">
+			<item xml:lang="de" localType="normalisedNationality">Ägypten"</item></xsl:for-each>
+		
+		<xsl:for-each select="metadata/def.staatsangeh_formal/staatsangeh_formal[@categid='state069']">
+			<item xml:lang="de" localType="normalisedNationality">Österreich"</item></xsl:for-each>
+			</list>
+		</generalContext>
+		<existDates>
+			<dateSet>
+				<date localType="birthDate" xml:lang="de"><xsl:value-of select="metadata/box.birth/birth/text"/></date>
+				<date localType="deathDate" xml:lang="de"><xsl:value-of select="metadata/box.death/death/text"/></date>
+				<dateRange>
+					<fromDate><xsl:value-of select="metadata/box.birth/birth/von"/></fromDate>
+					<toDate><xsl:value-of select="metadata/box.death/death/von"/></toDate>
+				</dateRange>
+			</dateSet>
+		</existDates>
+		<places>
+			<place localType="birthPlace"><xsl:value-of select="metadata/box.birth/birth/event"/></place>
+			<place localType="deathPlace"><xsl:value-of select="metadata/box.death/death/event"/></place>
+		</places>
+		
+		<biogHist>
+			<chronList>
+			
+			
+				<chronItem>
+					<xsl:for-each select="metadata/def.fakultaet/fakultaet[@categid='faculty001']">
+			<event xml:lang="de" localType="higherEducation">Studium an der Rechts- und Staatswissenschaftlichen Fakultät der Universität Hamburg bzw. der Hansischen Universität zu Hamburg</event>
+		</xsl:for-each>
+		<xsl:for-each select="metadata/def.fakultaet/fakultaet[@categid='faculty002']">
+			<event xml:lang="de" localType="higherEducation">Studium an der Medizinischen Fakultät der Universität Hamburg bzw. der Hansischen Universität zu Hamburg</event>
+		</xsl:for-each>
+		<xsl:for-each select="metadata/def.fakultaet/fakultaet[@categid='faculty003']">
+			<event xml:lang="de" localType="higherEducation">Studium an der Philosophischen Fakultät der Universität Hamburg bzw. der Hansischen Universität zu Hamburg</event>
+		</xsl:for-each>
+		<xsl:for-each select="metadata/def.fakultaet/fakultaet[@categid='faculty004']">
+			<event xml:lang="de" localType="higherEducation">Studium an der Mathematisch-Naturwissenschaftlichen Fakultät der Universität Hamburg bzw. der Hansischen Universität zu Hamburg</event>
+		</xsl:for-each>
+					<dateRange>
+						<fromDate><xsl:value-of select="metadata//tag_anmeldung"/></fromDate>
+						<toDate><xsl:value-of select="metadata//tag_abmeldung"/></toDate>
+					</dateRange>
+		
+				</chronItem>
+			
+			<xsl:for-each select="metadata/box.otherinfo">
+				<chronItem>
+					<event><xsl:for-each select="otherinfo"><xsl:value-of select="[text()]"/></xsl:for-each></event>
+				</chronItem>
+			</xsl:for-each>
+			
+			</chronList>
+		</biogHist>
+		
+		<functions/>
+		<occupations/>
+	</description>
+	<relations>
+	<xsl:for-each select="structure/parents/parent/@xlink:title">
+		<resourceRelation xml:lang="de" resourceRelationType="subjectOf">
+			<objectXMLWrap>Digitalisat ist hier zugänglich: https://www.matrikelportal.uni-hamburg.de/receive/<xsl:value-of select="[text()]"/></objectXMLWrap>
+		</resourceRelation>
+		<resourceRelation xml:lang="en" resourceRelationType="subjectOf">
+			<objectXMLWrap>Digital object is accessible here: https://www.matrikelportal.uni-hamburg.de/receive/<xsl:value-of select="[text()]"/></objectXMLWrap>
+		</resourceRelation>
+		</xsl:for-each>
+	</relations>
+</cpfDescription>
+</eac-cpf>
+</xsl:for-each>
+</xsl:template>
+</xsl:stylesheet>
