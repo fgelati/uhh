@@ -8,7 +8,8 @@ Presentations held while serving at the
 - "[Die europäische Forschungsinfrastruktur DARIAH als auch für Archive offener Ort der Forschung](2025-goettingen/01.md)" for the Frühjahrstagung der Fachgruppe 8 (Archive der Hochschulen und wissenschaftlichen Institutionen) im Verband deutscher Archivarinnen und Archivare e. V., Göttingen 2025;
 - ["Creating, Managing and Archiving Textual Corpora in Under-resourced Languages"](2025-06-goettingen/01.md) for the DARIAH Annual Event 2025 at Göttingen;
 - ["STARDAST@UAHH"](2026-hamburg/01.md), Hamburg 2026;
-- ["Flash Provocation: What is Research Data Management?"](2026-edinburgh/01.md), Edinburgh 2026
+- ["Flash Provocation: What is Research Data Management?"](2026-edinburgh/01.md), Edinburgh 2026;  
+- ["Current Debates in German Archives about Research Data"](2026-uhh-unistra/01.md), Hamburg 2026
 
 
 Francesco Gelati  
